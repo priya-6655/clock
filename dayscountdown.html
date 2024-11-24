@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"href="dcdclock.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+     .time {
+      position: absolute;
+      top: -100px; /* Start above the screen */
+      font-size: 5rem;
+      font-weight: bold;
+      opacity: 0;
+      transform: scale(1); /* Initial size */
+      transition: transform 2s ease-in-out, top 2s ease-in-out; /* Smooth fall and zoom transitions */
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="falling-numbers-container">
+      <div class="time" id="timeDisplay">00:00:00</div>
+      <script>
+        
+          const container = document.querySelector('.falling-numbers-container');
+
+          function createFallingNumber() {
+          const number = document.createElement('div');
+          number.classList.add('number');
+          number.textContent = Math.floor(Math.random() * 10); // Random number from 0 to 9
+          
+          const randomLeft = Math.random() * 100; // Random horizontal position (percentage)
+          const randomDuration = Math.random() * 2 + 3; // Random fall duration (3-5 seconds)
+          const randomDelay = Math.random() * 2; // Random start delay (0-2 seconds)
+          
+          // Apply styles to the number
+          number.style.left = `${randomLeft}%`;
+          number.style.animationDuration = `${randomDuration}s`;
+          number.style.animationDelay = `${randomDelay}s`;
+          
+          container.appendChild(number);
+          
+          // Remove the number after the animation ends to prevent memory leaks
+          number.addEventListener('animationend', () => {
+            number.remove();
+          });
+        }
+
+        // Generate numbers continuously
+         setInterval(createFallingNumber, 300); // Create a number every 300ms
+
+
+         const timeDisplay = document.getElementById("timeDisplay");
+
+    let lastMinute = new Date().getMinutes();
+
+    // Function to get the current time in HH:MM:SS format
+    function getCurrentTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      return `${hours}:${minutes}:${seconds}`;
+    }
+
+    // Function to update the time every second
+    function updateTime() {
+      timeDisplay.textContent = getCurrentTime();
+    }
+
+    // Function to apply the fall animation
+    function applyFall() {
+      timeDisplay.style.top = "-100px"; // Start above the screen
+      timeDisplay.style.opacity = 0; // Start invisible
+      console.log('Falling',lastMinute)
+      // Trigger reflow and apply fall animation
+      setTimeout(() => {
+        timeDisplay.style.top = "50vh"; // Fall to the center of the screen
+         timeDisplay.style.left = "90vh";
+        timeDisplay.style.opacity = 1; // Fade in
+      }, 0);
+    }
+
+    // Function to apply the zoom animation based on the minute
+    function applyZoom() {
+      timeDisplay.style.transform = "scale(1)"; // Reset scale
+      timeDisplay.offsetHeight; // Trigger reflow
+
+      // Apply zoom (centered in the window)
+      setTimeout(() => {
+        timeDisplay.style.transform = "scale(2)"; // Zoom in
+      }, 0);
+
+      setTimeout(() => {
+         timeDisplay.style.transform = "scale(1)"; // Reset zoom
+        // // timeDisplay.style.top = "-50vh"; // Fall to the center of the screen
+        // // timeDisplay.style.left = "90vh";
+        // // timeDisplay.style.opacity = 0; // Fade in
+        // setTimeout(()=>{
+          applyFall();
+      }, 5000);
+    }
+
+    // Function to handle the time-based zooming
+    function checkMinuteZoom() {
+      const currentMinute = new Date().getMinutes();
+
+      // If the minute has changed, apply the zoom animation
+      if (currentMinute !== lastMinute) {
+        applyZoom();
+        lastMinute = currentMinute; // Update the last minute value
+      }
+    }
+
+    // Function to sequence fall and zoom animations
+    function startTimeSequence() {
+      // Apply fall animation every second
+      // setInterval(() => {
+        applyFall();
+      // }, 1000);
+
+      // Apply zoom based on minute change
+      setInterval(() => {
+        checkMinuteZoom();
+      }, 1000);
+    }
+
+    
+
+    // Initialize the time and start updating every second
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // Start the fall and zoom animation sequence
+    startTimeSequence();
+
+
+      </script>
+    
+      <form id="countdown">
+        <div class="well">
+          <input type="date" id="date" class="day">
+          <button type="submit" class="btn"style="font-size: 20px;font-weight: 800;border-radius: 25px;">Submit</button>
+      </form>
+          <p id="demo"></p>
+
+        <script>
+
+              const form = document.getElementById("countdown");
+            const countdownElement = document.getElementById("demo");
+            let countdownInterval;
+
+            function updateCountdown(date) {
+              const now = new Date().getTime();
+              const timeleft = date - now; 
+                  
+                const days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+                 if (timeleft > 0) {
+                countdownElement.textContent = `${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds`;
+              } 
+              else {
+                countdownElement.textContent = "The countdown is over!";
+                clearInterval(countdownInterval);
+              }
+            }
+              
+              form.addEventListener("submit", (event) => {
+              event.preventDefault(); 
+
+              const targetDateInput = document.getElementById("date").value;
+              if (targetDateInput) {
+                const targetDate = new Date(targetDateInput).getTime(); 
+
+                if (countdownInterval) {
+                  clearInterval(countdownInterval); 
+                }
+
+                 countdownInterval = setInterval(() => updateCountdown(targetDate), 1000);
+
+                  updateCountdown(targetDate);
+              } 
+              else {
+                countdownElement.textContent = "Please enter a valid date.";
+              }
+            });
+        </script>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
