@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet"href="clock.css">
+<title>Digital Clock</title>
+<head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20220608/pngtree-luxury-3d-trianlge-shape-home-interior-wall-background-design-image_1402928.jpg');
+		}
+		a{
+			color: darkred;
+			font-size: 20px;
+			margin: 5px;
+			cursor: pointer;
+			text-decoration: none;
+			font-weight: bolder;
+		}
+		.digital{
+			position: absolute;
+			top: 40%;
+			left: 32%;
+			transform: translate(-50% -50%);
+			font-size: 100px;
+			padding: 0px 5px;
+			color: darkred;
+		}
+	</style>
+</head>
+<body>
+	<a href="C:\Users\Vigneshwaran\Documents\learn-with-priya\css\clock\clock clone\clock.html">Clockface Online</a>
+	<div id="clockDisplay" class="digital"></div>
+	<script>
+		{
+			function showTime() {
+			var date=new Date();
+			var h = date.getHours();
+			var m = date.getMinutes();
+			var s = date.getSeconds();
+			var session = " AM";
+
+			if(h==0){
+				h = 12;
+			}
+
+			if(h > 12){
+				h = h - 12;
+				session = " PM"
+			}
+
+			h = (h < 10) ? "0" + h : h;
+			m = (m < 10) ? "0" + m : m;
+			s = (s < 10) ? "0" + s : s;
+
+			var time = h + ":" + m + ":" + s + "" + session;
+			document.getElementById("clockDisplay").innerText = time;
+			document.getElementById("clockDisplay").textContent = time;
+
+			setTimeout(showTime, 1000);
+		}
+		showTime();
+	}
+	</script>
+</body>
+</html>
