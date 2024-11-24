@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet"href="pomodora.css">
+<title>Pomodora Timer - Clockface Online</title>
+<head>
+	<style>
+		*{
+			background-color: #010e21;
+			margin: 0;
+			padding: 0;
+		}
+		h1{
+			cursor: pointer;
+			font-size: 20px;
+			font-weight: bolder;
+			color: white;
+			margin: 20px;
+		}
+		.item1{
+			grid-area: myArea;
+		}
+		.grid-container{
+			grid-template-areas: 'myArea myArea myArea myArea';
+			display: grid;
+			gap:1px;
+			padding: 1px;
+			background-color: white;
+			margin: 60px 400px 0px 400px;
+		}
+		.grid-item{
+			text-align: center;
+			padding: 10px;
+			font-size: 30px;
+		}
+		.item1 {
+			grid-column: 1 / span 4;
+			grid-row: 1;
+		}
+
+		.item2 {
+			grid-column: 1/span 2;
+			grid-row: 2 / span 25;
+			font-size: 18px;
+		}
+
+		.item3 {
+			grid-column:1/span 2;
+			grid-row: 30/span 5;
+			font-size: 18px;
+		}
+		.item4 {
+			grid-column:3/span 2;
+			grid-row: 2/span 30;
+			font-size: 18px;
+
+		}
+		.item5 {
+			grid-column:3/span 2;
+			grid-row: 32/span 7;
+			font-size: 18px;
+		}
+		div{
+			color: white;
+			letter-spacing: 4px;
+			word-spacing: 2px;
+			font-family: sans-serif;
+		}
+		.item1:hover{
+			color: blue;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<h1>Clockface Online</h1>
+	<div class="grid-container">
+		<div class="grid-item item1">Shanmugapriya's Timer</div>
+		<div class="grid-item item2">Break Length
+			<div class="wrapped"style="margin-top: 40px;margin-bottom: 25px;">
+				<span class="minus"style="border: 2px solid white;cursor: pointer;">-</span>
+				<span class="num">1</span>
+				<span class="plus"style="border: 2px solid white;cursor: pointer;">+</span>
+			
+			<script type="text/javascript">
+				const plus = document.querySelector(".plus"),
+				minus = document.querySelector(".minus"),
+				num = document.querySelector(".num");
+
+				let a = 1;
+
+				plus.addEventListener("click", ()=>{
+					a++;
+					a = (a < 10) ? "0" + a:a;
+					num.innerText = a;
+					console.log(a);
+				});
+
+				minus.addEventListener("click", ()=>{
+					if(a > 1){
+						a--;
+						a = (a < 10) ? "0" + a:a;
+						num.innerText = a;
+					}
+					
+				});
+			</script>
+		</div>
+		</div>
+
+		<div class="grid-item item3">Session Length
+			<div class="wrapped"style="margin-top: 40px;margin-bottom: 25px;">
+				<span class="minus1"style="border: 2px solid white;cursor: pointer;">-</span>
+				<span class="num1">1</span>
+				<span class="plus1"style="border: 2px solid white;cursor: pointer;">+</span>
+			
+			</div>
+			<div class="grid-item item3">   session count
+				<div class="wrapped"style="margin-top: 40px;margin-bottom: 25px;">
+					<span class="minus2"style="border: 2px solid white;cursor: pointer;">-</span>
+					<span class="num2">1</span>
+					<span class="plus2"style="border: 2px solid white;cursor: pointer;">+</span>
+					<script>
+
+						const plus2 = document.querySelector(".plus2"),
+						minus2 = document.querySelector(".minus2"),
+						num2 = document.querySelector(".num2");
+
+						let c = 1;
+
+						plus2.addEventListener("click", ()=>{
+							c++;
+							c = (c < 10) ? "0" + c:c;
+							num2.innerText = c;
+							console.log(c);
+						});
+
+						minus2.addEventListener("click", ()=>{
+							if(c > 1){
+								c--;
+								c = (c < 10) ? "0" + c:c;
+								num2.innerText = c;
+							}
+							
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="grid-item item4">Session
+			<div class="top1">
+			<p class="timer"id="timer">01 : 00</p>
+			<div class="button-wrapper">
+				<button id="start">Start</button>
+				<button id="stop">Stop</button>
+				<button id="reset">Reset</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		const start = document.getElementById('start');
+		const stop = document.getElementById('stop');
+		const reset = document.getElementById('reset');
+
+		const plus1 = document.querySelector(".plus1"),
+		minus1 = document.querySelector(".minus1"),
+		num1 = document.querySelector(".num1");
+		let b = 25;
+
+		plus1.addEventListener("click", ()=>{
+			b++;
+			b = (b < 10) ? "0" + b:b;
+			num1.innerText = b;
+			
+			timer.innerHTML = `${b} : 00`;
+
+		});
+
+		minus1.addEventListener("click", ()=>{
+			if(b > 1){
+				b--;
+				b = (b < 10) ? "0" + b:b;
+				num1.innerText = b;
+
+				timer.innerHTML = `${b} : 00`;
+			}
+			
+		});
+		
+		let interval;
+
+	const updateTimer = (timeleft) => {	
+		const timer = document.getElementById('timer');
+		const minutes = Math.floor((timeleft/60));
+		const seconds = timeleft % 60;
+
+		timer.innerHTML = `${minutes.toString().padStart(2,"0")}
+		:
+		${seconds.toString().padStart(2,"0")}`;
+
+	};
+
+	let isCurrentSessionCompleted = false;
+
+	const startTimer = (timeleft, sessionCount) => {
+		console.log('timeleft',timeleft);
+		
+		console.log('Outer sessionCount',sessionCount)
+		interval = setInterval(() => {
+			timeleft--;
+			updateTimer(timeleft);
+
+			if(timeleft === 0){
+				clearInterval(interval);
+				// check for session only not for break
+				--sessionCount;
+
+				// alert("Time's up!");
+				// check for interval time to run
+				// const isTimerCompleted = parseInt(timer.textContent);
+				// if(isTimerCompleted)
+
+				// To run break
+				console.log('isCurrentSessionCompleted',isCurrentSessionCompleted)
+				if(!isCurrentSessionCompleted){
+					console.log('sessionCount',sessionCount)
+					if(sessionCount>-1){
+						timeleft = parseInt(num.textContent) * 60;
+						startTimer(timeleft, sessionCount);
+						console.log('Counter Timer running');
+					}
+					isCurrentSessionCompleted = true;
+				} else {
+					if(sessionCount>0){
+						timeleft = parseInt(num1.textContent) * 60;
+						startTimer(timeleft, sessionCount);
+					}
+					isCurrentSessionCompleted = false;
+					console.log('Session Timer running')
+				}
+			}
+		},
+		1000);
+	}
+
+	const stopTimer=()=>clearInterval(interval);
+
+	const resetTimer=()=>{
+		clearInterval(interval);
+		const timeleft= parseInt(num1.textContent) * 60;
+		updateTimer(timeleft);
+	}
+
+	start.addEventListener("click",()=>{
+		const timer = document.getElementById('timer');
+		let timeleft = parseInt(num1.textContent) * 60;
+		let sessionCount = parseInt(num2.textContent);
+		startTimer(timeleft,sessionCount)
+	});
+	stop.addEventListener("click",stopTimer);
+	reset.addEventListener("click",resetTimer);
+
+	</script>
+		<div class="grid-item item5">Intervel Count:</div>
+	</div>
+</body>
+</html>
+
