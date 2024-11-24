@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="analog.css">
+	<title>Sleek Analog Clock</title>
+</head>
+<body>
+	<div class="analog-clock">
+		<div class="needle hrs"></div>
+		<div class="needle min"></div>
+		<div class="needle sec"></div>
+		<div class="number number-3">3</div>
+		<div class="number number-6">6</div>
+		<div class="number number-9">9</div>
+		<div class="number number-12">12</div>
+	</div>
+
+	<script>
+		const hour = document.querySelector('.hrs');
+		const minute = document.querySelector('.min');
+		const second = document.querySelector('.sec');
+
+		setInterval(checkClock,1000);
+
+		function checkClock() {
+			const time = new Date();
+			const sec = time.getSeconds()/60;
+			const min = (sec+time.getMinutes())/60;
+			const hrs = (min+time.getHours())/12;
+			hour.style.setProperty('--rotation',hrs*360);
+			minute.style.setProperty('--rotation',min*360);
+			second.style.setProperty('--rotation',sec*360);
+		}
+
+			checkClock();
+	</script>
+</body>
+</html>

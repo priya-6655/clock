@@ -1,0 +1,95 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Fasthand&display=swap');
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body{
+	background-color: #012154;
+	height: auto;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.analog-clock{
+	width: 500px;
+	height: 500px;
+	background-color: black;
+	border-radius: 50%;
+	border: 10px ridge red;
+	position: relative;
+	margin-top: 150px;
+}
+.analog-clock::after{
+	content: '';
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	background-color: red;
+	border-radius: 50%;
+	top:50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	z-index: 10;
+}
+.analog-clock::before{
+	content: 'Ajanta';
+	color: red;
+	position: absolute;
+	top:20%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	font-size: 20px;
+	font-family: 'fasthand',cursive ;
+}
+.number{
+	--rotate:0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	font-size: 28px;
+	color: white;
+	transform: rotate(var(--rotate));
+}
+.number-3{--rotate:90deg; transform: translate(225px, 220px);}
+.number-6{--rotate:180deg; transform: translateY(445px);}
+.number-9{--rotate:270deg; transform: translate(-225px,220px);}
+
+.needle{
+	--rotation:0;
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+/*	width: 10px;
+	height: 50%;*/
+	transform-origin: bottom;
+	transform: translateX(-50%)rotate(calc(var(--rotation)*1deg));
+/*	background-color: red;*/
+/*	z-index: 8;*/
+	border:1px solid black;
+	border-top-left-radius: 50%;
+	border-top-right-radius: 50%;
+}
+
+.sec{
+	background-color: yellow;
+	width: 3px;
+	height: 40%;
+}
+
+.min{
+	background-color: white;
+	width: 7px;
+	height: 35%;
+}
+
+.hrs{
+	background-color: red;
+	width: 10px;
+	height: 30%;
+}
